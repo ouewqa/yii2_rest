@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Yii 2 Advanced Project Template
 ===============================
 
@@ -52,3 +53,7 @@ environments/            contains environment-based overrides
 tests                    contains various tests for the advanced application
     codeception/         contains tests developed with Codeception PHP Testing Framework
 ```
+=======
+# yii2_rest
+yii2 rest test
+>>>>>>> 5659dc1fc026f41c6f0bb6a2e5c8cd3d17f9b9a4
