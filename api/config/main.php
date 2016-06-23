@@ -13,9 +13,15 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+        'request' => [
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
+        ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'api\models\User',
             'enableAutoLogin' => true,
+            'enableSession' => false,//rest 无状态，不允许session
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -29,14 +35,18 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'user',
+                    'pluralize' => true
+                ],
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
