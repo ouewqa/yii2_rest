@@ -23,6 +23,8 @@ class AuthActiveController extends ActiveController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
+
+        //开启oauth授权验证
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::className(),
             'authMethods' => [
@@ -31,6 +33,10 @@ class AuthActiveController extends ActiveController
                 //QueryParamAuth::className(),
             ],
         ];
+
+        //开启请求频率限制
+        $behaviors['rateLimiter']['enableRateLimitHeaders'] = true;
+
         return $behaviors;
     }
 }
