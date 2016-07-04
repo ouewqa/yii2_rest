@@ -11,7 +11,26 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'api\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        //other modules .....
+        'oauth2' => [
+            'class' => 'filsh\yii2\oauth2server\Module',
+            'tokenParamName' => 'access_token',
+            'tokenAccessLifetime' => 3600 * 24,
+            'storageMap' => [
+                'user_credentials' => 'api\models\User',
+            ],
+            'grantTypes' => [
+                'user_credentials' => [
+                    'class' => 'OAuth2\GrantType\UserCredentials',
+                ],
+                'refresh_token' => [
+                    'class' => 'OAuth2\GrantType\RefreshToken',
+                    'always_issue_new_refresh_token' => true
+                ]
+            ]
+        ]
+    ],
     'components' => [
         'request' => [
             'parsers' => [

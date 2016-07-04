@@ -18,7 +18,9 @@
         "yiisoft/yii2": ">=2.0.6",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "yiisoft/yii2-apidoc": "~2.0.0"
+        "yiisoft/yii2-apidoc": "~2.0.0",
+        "filsh/yii2-oauth2-server": "*",
+        "firebase/php-jwt": "*"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
