@@ -31,3 +31,8 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
+
+
+
+# apidoc
+/output

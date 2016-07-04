@@ -12,14 +12,27 @@ use yii\rest\ActiveController;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 
-
+/**
+ * Class AuthActiveController
+ * @package api\controllers
+ */
 class AuthActiveController extends ActiveController
 {
+    /**
+     * 如果不允许用户访问，返回ForbiddenHttpException异常
+     * @param string $action
+     * @param null $model
+     * @param array $params
+     */
     public function checkAccess($action, $model = null, $params = [])
     {
+        parent::checkAccess($action, $model, $params);
         //throw new ForbiddenHttpException();
     }
 
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         $behaviors = parent::behaviors();

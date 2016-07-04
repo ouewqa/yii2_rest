@@ -8,7 +8,16 @@
 
 namespace api\controllers;
 
+/**
+ * Class UserController
+ * @package api\controllers
+ */
 class UserController extends AuthActiveController
 {
-    public $modelClass = 'api\models\User';    
+    /**
+     * required
+     * 
+     * @var $modelClass string the model class name. This property must be set.
+     */
+    public $modelClass = 'api\models\User';
 }
