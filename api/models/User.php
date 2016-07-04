@@ -8,8 +8,11 @@ use common\models\User as BaseUser;
  * @property mixed allowance
  * @property mixed allowance_updated_at
  */
-class User extends BaseUser implements yii\filters\RateLimitInterface
+class User extends BaseUser implements yii\filters\RateLimitInterface, \OAuth2\Storage\UserCredentialsInterface
 {
+    /**
+     * @var int
+     */
     public $rateLimit = 100;
 
     /**
@@ -32,11 +35,21 @@ class User extends BaseUser implements yii\filters\RateLimitInterface
         return static::findOne(['auth_key' => $token]);
     }
 
+    /**
+     * @param yii\web\Request $request
+     * @param yii\base\Action $action
+     * @return array
+     */
     public function getRateLimit($request, $action)
     {
         return [$this->rateLimit, 60]; // 限制在1秒内可以请求 $this->rateLimit 次
     }
 
+    /**
+     * @param yii\web\Request $request
+     * @param yii\base\Action $action
+     * @return array
+     */
     public function loadAllowance($request, $action)
     {
         return [$this->allowance, $this->allowance_updated_at];
@@ -54,5 +67,38 @@ class User extends BaseUser implements yii\filters\RateLimitInterface
         $this->allowance = $allowance;
         $this->allowance_updated_at = $timestamp;
         $this->save();
+    }
+
+    /**
+     * @param $username
+     * @param $password
+     * @return bool
+     */
+    public function checkUserCredentials($username, $password)
+    {
+        $user = static::findByEmail($username);
+        if (empty($user)) {
+            return false;
+        }
+        return $user->validatePassword($password);
+    }
+
+    /**
+     * @param $username
+     * @return array
+     */
+    public function getUserDetails($username)
+    {
+        $user = static::findByEmail($username);
+        return ['user_id' => $user->getId()];
+    }
+
+    /**
+     * @param $email
+     * @return null|static
+     */
+    public static function findByEmail($email)
+    {
+        return static::findOne(['email' => $email]);
     }
 }

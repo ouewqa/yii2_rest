@@ -37,28 +37,22 @@ return [
                 'application/json' => 'yii\web\JsonParser',
             ],
         ],
+        'errorHandler' => [
+            'errorAction' => 'site/error',
+        ],
         'user' => [
             'identityClass' => 'api\models\User',
             'enableAutoLogin' => true,
             'enableSession' => false,//rest 无状态，不允许session
-        ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
-            ],
-        ],
-        'errorHandler' => [
-            'errorAction' => 'site/error',
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
+                // url rule for oauth2
+                'POST oauth2/<action:\w+>' => 'oauth2/rest/<action>',
+                // url rule for rest api
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'user',
