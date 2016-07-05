@@ -28,6 +28,7 @@ class User extends BaseUser implements yii\filters\RateLimitInterface, \OAuth2\S
     }
 
     /**
+     * rest oauth授权验证接口，如果使用　Filsh/yii2-oauth2-server　需要读取 oauth_users 表
      * @inheritdoc
      */
     public static function findIdentityByAccessToken($token, $type = null)
@@ -76,7 +77,7 @@ class User extends BaseUser implements yii\filters\RateLimitInterface, \OAuth2\S
      */
     public function checkUserCredentials($username, $password)
     {
-        $user = static::findByEmail($username);
+        $user = static::findByUsername($username);
         if (empty($user)) {
             return false;
         }
@@ -89,16 +90,16 @@ class User extends BaseUser implements yii\filters\RateLimitInterface, \OAuth2\S
      */
     public function getUserDetails($username)
     {
-        $user = static::findByEmail($username);
+        $user = static::findByUsername($username);
         return ['user_id' => $user->getId()];
     }
 
     /**
-     * @param $email
+     * @param $username
      * @return null|static
      */
-    public static function findByEmail($email)
+    public static function findByUsername($username)
     {
-        return static::findOne(['email' => $email]);
+        return static::findOne(['username' => $username]);
     }
 }
